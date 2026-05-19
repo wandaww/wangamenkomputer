@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>wangamenkomputer — Servis & Rakit PC Bandar Lampung</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0a0b; --bg2: #111114; --bg3: #18181c;
+    --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.15);
+    --accent: #00e5a0; --accent2: #00b87a;
+    --text: #e8e8ec; --muted: #888890;
+    --mono: 'Space Mono', monospace; --sans: 'DM Sans', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.7; overflow-x: hidden; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(10,10,11,0.88); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .logo { font-family: var(--mono); font-size: 15px; color: var(--accent); }
+  .logo span { color: var(--muted); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta { font-family: var(--mono); font-size: 12px; background: var(--accent); color: #000; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: 700; }
+  .nav-cta:hover { background: var(--accent2); }
+
+  .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 120px 2rem 80px; max-width: 900px; margin: 0 auto; }
+  .hero-tag { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 8px; }
+  .hero-tag::before { content: ''; display: block; width: 24px; height: 1px; background: var(--accent); }
+  h1 { font-family: var(--mono); font-size: clamp(2.2rem, 6vw, 4.2rem); font-weight: 700; line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 1.5rem; }
+  h1 .dim { color: var(--muted); }
+  h1 .hl { color: var(--accent); }
+  .hero-sub { font-size: 1.1rem; color: var(--muted); max-width: 520px; margin-bottom: 2.5rem; line-height: 1.8; }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary { font-family: var(--mono); font-size: 13px; background: var(--accent); color: #000; padding: 12px 24px; border-radius: 4px; text-decoration: none; font-weight: 700; display: inline-block; transition: all 0.2s; }
+  .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
+  .btn-ghost { font-family: var(--mono); font-size: 13px; color: var(--text); padding: 12px 24px; border-radius: 4px; text-decoration: none; border: 1px solid var(--border2); display: inline-block; transition: all 0.2s; }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+  .hero-stats { display: flex; gap: 3rem; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); flex-wrap: wrap; }
+  .stat-num { font-family: var(--mono); font-size: 1.8rem; font-weight: 700; color: var(--accent); }
+  .stat-label { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  section { padding: 80px 2rem; max-width: 900px; margin: 0 auto; }
+  .sec-tag { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1rem; }
+  h2 { font-family: var(--mono); font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: 700; letter-spacing: -1px; margin-bottom: 1rem; }
+  h2 .dim { color: var(--muted); }
+  .full-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 2.5rem; }
+  .service-card { background: var(--bg2); padding: 1.5rem; transition: background 0.2s; }
+  .service-card:hover { background: var(--bg3); }
+  .svc-icon { font-size: 22px; margin-bottom: 1rem; }
+  .svc-title { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+  .svc-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .svc-price { font-family: var(--mono); font-size: 11px; color: var(--accent); margin-top: 0.75rem; }
+
+  .why-box { background: var(--bg2); border: 1px solid var(--border2); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 2rem 2rem 2rem 2.5rem; margin-top: 2.5rem; }
+  .why-box p { color: var(--muted); font-size: 15px; line-height: 1.9; margin-bottom: 1rem; }
+  .why-box p:last-child { margin-bottom: 0; }
+  .why-box strong { color: var(--text); font-weight: 500; }
+
+  .steps { display: flex; flex-direction: column; margin-top: 2.5rem; }
+  .step { display: flex; gap: 1.5rem; padding: 1.5rem 0; border-bottom: 1px solid var(--border); }
+  .step:last-child { border-bottom: none; }
+  .step-num { font-family: var(--mono); font-size: 11px; color: var(--accent); min-width: 32px; padding-top: 3px; }
+  .step-title { font-family: var(--mono); font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .step-desc { font-size: 13px; color: var(--muted); }
+
+  .ticket-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,229,160,0.08); border: 1px solid rgba(0,229,160,0.25); border-radius: 20px; padding: 6px 14px; font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 1px; margin-bottom: 1.5rem; }
+  .ticket-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+  .form-wrap { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 2.5rem; margin-top: 1rem; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group.full { grid-column: 1 / -1; }
+  label { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+  input, select, textarea { background: var(--bg3); border: 1px solid var(--border); border-radius: 4px; color: var(--text); font-family: var(--sans); font-size: 14px; padding: 10px 12px; outline: none; transition: border 0.2s; width: 100%; }
+  input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+  select option { background: var(--bg3); }
+  textarea { resize: vertical; min-height: 100px; }
+  .form-note { font-size: 12px; color: var(--muted); margin-top: 1rem; line-height: 1.7; }
+  .form-note strong { color: var(--text); font-weight: 500; }
+  .btn-submit { font-family: var(--mono); font-size: 13px; font-weight: 700; background: var(--accent); color: #000; border: none; border-radius: 4px; padding: 12px 28px; cursor: pointer; margin-top: 1.5rem; transition: all 0.2s; }
+  .btn-submit:hover { background: var(--accent2); transform: translateY(-1px); }
+  .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  .form-success { display: none; background: rgba(0,229,160,0.08); border: 1px solid rgba(0,229,160,0.3); border-radius: 6px; padding: 1rem 1.25rem; font-size: 14px; color: var(--accent); margin-top: 1rem; line-height: 1.7; }
+  .form-error { display: none; background: rgba(220,50,50,0.08); border: 1px solid rgba(220,50,50,0.3); border-radius: 6px; padding: 1rem 1.25rem; font-size: 13px; color: #ff6b6b; margin-top: 1rem; }
+
+  .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 2.5rem; }
+  .testi-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; position: relative; }
+  .testi-card::before { content: '\201C'; font-family: Georgia, serif; font-size: 3rem; color: var(--accent); opacity: 0.25; position: absolute; top: 8px; left: 16px; line-height: 1; }
+  .testi-text { font-size: 14px; color: var(--muted); line-height: 1.7; padding-top: 1.2rem; margin-bottom: 1rem; font-style: italic; }
+  .testi-author { display: flex; align-items: center; gap: 10px; }
+  .testi-avatar { width: 32px; height: 32px; border-radius: 50%; background: rgba(0,229,160,0.12); border: 1px solid rgba(0,229,160,0.25); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 11px; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+  .testi-name { font-family: var(--mono); font-size: 12px; color: var(--text); }
+  .testi-stars { font-size: 11px; letter-spacing: 1px; color: var(--accent); }
+
+  footer { border-top: 1px solid var(--border); padding: 2.5rem 2rem; text-align: center; }
+  .footer-logo { font-family: var(--mono); font-size: 14px; color: var(--accent); margin-bottom: 0.5rem; }
+  .footer-tagline { font-size: 13px; color: var(--muted); }
+  .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
+  .footer-links a { font-size: 12px; color: var(--muted); text-decoration: none; transition: color 0.2s; cursor: pointer; }
+  .footer-links a:hover { color: var(--accent); }
+
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .form-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">wangamen<span>komputer</span></div>
+  <ul class="nav-links">
+    <li><a href="#layanan">Layanan</a></li>
+    <li><a href="#kenapa">Kenapa online?</a></li>
+    <li><a href="#proses">Proses</a></li>
+    <li><a href="#testi">Review</a></li>
+    <li><a href="#order">Order</a></li>
+  </ul>
+  <a href="#order" class="nav-cta">Buat Tiket</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">Bandar Lampung, Indonesia</div>
+  <h1>
+    <span class="dim">Tech service</span><br>
+    yang bisa <span class="hl">dipercaya</span><br>
+    <span class="dim">— sampai ke depan</span><br>
+    <span class="dim">pintu rumahmu.</span>
+  </h1>
+  <p class="hero-sub">Rakit PC, optimasi Windows/Linux, jailbreak PS3/PS4, install game, servis laptop — dikerjakan dengan passion, bukan sekadar kerjaan.</p>
+  <div class="hero-btns">
+    <a href="#order" class="btn-primary">Buat Tiket Servis</a>
+    <a href="#layanan" class="btn-ghost">Lihat Layanan</a>
+  </div>
+  <div class="hero-stats">
+    <div><div class="stat-num">100%</div><div class="stat-label">Home-based, terpercaya</div></div>
+    <div><div class="stat-num">PC+PS</div><div class="stat-label">Multi-platform</div></div>
+    <div><div class="stat-num">Linux</div><div class="stat-label">Pro level expertise</div></div>
+  </div>
+</div>
+
+<hr class="full-divider">
+
+<section id="layanan">
+  <div class="sec-tag">// services</div>
+  <h2>Apa yang kami <span class="dim">kerjakan</span></h2>
+  <div class="services-grid">
+    <div class="service-card"><div class="svc-icon">🖥️</div><div class="svc-title">RAKIT PC CUSTOM</div><div class="svc-desc">Konsultasi spek, beli komponen, rakit, setting BIOS hingga OS siap pakai.</div><div class="svc-price">// Konsultasi gratis</div></div>
+    <div class="service-card"><div class="svc-icon">🪟</div><div class="svc-title">WINDOWS OPTIMIZATION</div><div class="svc-desc">Aktivasi, debloat, tweak performa, install driver & software kebutuhan kamu.</div><div class="svc-price">// Mulai Rp 50.000</div></div>
+    <div class="service-card"><div class="svc-icon">🐧</div><div class="svc-title">LINUX GAMING SETUP</div><div class="svc-desc">Install distro, konfigurasi Proton/Wine, optimasi untuk gaming di Linux.</div><div class="svc-price">// Spesialisasi kami</div></div>
+    <div class="service-card"><div class="svc-icon">🎮</div><div class="svc-title">PS3 & PS4 JAILBREAK</div><div class="svc-desc">Jailbreak, install game, PKG manager, CFW/HFW — PS3 & PS4 firmware support.</div><div class="svc-price">// Nego via chat</div></div>
+    <div class="service-card"><div class="svc-icon">🔧</div><div class="svc-title">SERVIS LAPTOP</div><div class="svc-desc">Diagnosa, ganti pasta, reflow, kabel eDP, penggantian komponen ringan.</div><div class="svc-price">// Antar ke lokasi kami</div></div>
+    <div class="service-card"><div class="svc-icon">🔄</div><div class="svc-title">JUAL BELI PERANGKAT</div><div class="svc-desc">Broker komputer bekas, bantu cari perangkat sesuai budget dan kebutuhan.</div><div class="svc-price">// Harga pasar + jujur</div></div>
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<section id="kenapa">
+  <div class="sec-tag">// why online?</div>
+  <h2>Kenapa <span class="dim">belum punya</span><br>toko fisik?</h2>
+  <div class="why-box">
+    <p>Jujur aja — kami <strong>belum punya tempat sendiri</strong>. Di depan rumah sebenarnya ada bangunan bekas warung yang bisa banget dijadiin tempat servis. Secara fisik, lokasinya ideal.</p>
+    <p>Tapi kenyataannya, itu <strong>bukan tanah milik orang tua kami</strong> — melainkan milik nenek, yang saat ini sedang jadi sengketa di antara anak-anaknya. Kami tidak bisa sembarangan menempati tempat itu sebelum urusan keluarga selesai, karena kami menghormati proses itu.</p>
+    <p>Jadi selagi nunggu, kami tetap jalan. <strong>Customer datang ke kami</strong>, kami juga bisa jemput perangkat. Website ini adalah "toko" kami untuk sementara — dan insyaallah, toko fisiknya menyusul.</p>
+    <p>Yang pasti: <strong>skill dan komitmen kami tidak nunggu toko</strong>. Selama ada perangkat yang butuh ditangani, kami siap.</p>
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<section id="proses">
+  <div class="sec-tag">// how it works</div>
+  <h2>Sistem <span class="dim">tiket servis</span></h2>
+  <div class="steps">
+    <div class="step"><div class="step-num">01 —</div><div><div class="step-title">Isi form + cantumkan nomor WA kamu</div><div class="step-desc">Jelaskan masalah atau kebutuhan sedetail mungkin. Tiket langsung masuk ke email kami.</div></div></div>
+    <div class="step"><div class="step-num">02 —</div><div><div class="step-title">Kami review tiket & hubungi via WA</div><div class="step-desc">Kami yang chat duluan ke nomor WA kamu — estimasi biaya, waktu, dan teknis akan didiskusikan di sana.</div></div></div>
+    <div class="step"><div class="step-num">03 —</div><div><div class="step-title">Antar perangkat atau kita jemput</div><div class="step-desc">Kamu bisa datang langsung atau hubungi untuk penjemputan (area Bandar Lampung).</div></div></div>
+    <div class="step"><div class="step-num">04 —</div><div><div class="step-title">Pengerjaan + update progress</div><div class="step-desc">Kami kabarin setiap perkembangan via WA. Transparansi adalah prioritas kami.</div></div></div>
+    <div class="step"><div class="step-num">05 —</div><div><div class="step-title">Selesai, ambil + bayar</div><div class="step-desc">Garansi servis berlaku sesuai kesepakatan awal.</div></div></div>
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<section id="testi">
+  <div class="sec-tag">// customer reviews</div>
+  <h2>Kata <span class="dim">mereka</span></h2>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="testi-text">Pelayanannya bagus banget, sangat komunikatif dan hasil servisannya juga bagus. Worth your money deh!</div>
+      <div class="testi-author">
+        <div class="testi-avatar">AR</div>
+        <div><div class="testi-name">Ahmad Ut Rofiq</div><div class="testi-stars">★★★★★</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-text">Anaknya pinter komputer, ramah, mantap!</div>
+      <div class="testi-author">
+        <div class="testi-avatar">ML</div>
+        <div><div class="testi-name">maulataq</div><div class="testi-stars">★★★★★</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-text">Joss jiss guys! Bisa sesuai budget dan dapat produk yang bagus-bagus dari dia.</div>
+      <div class="testi-author">
+        <div class="testi-avatar">DM</div>
+        <div><div class="testi-name">Dimas</div><div class="testi-stars">★★★★★</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<section id="order">
+  <div class="sec-tag">// open a ticket</div>
+  <h2>Buat <span class="dim">tiket servis</span></h2>
+  <div class="ticket-badge">
+    <span class="ticket-dot"></span>
+    SISTEM AKTIF — tiket masuk langsung ke email kami
+  </div>
+  <div class="form-wrap">
+    <form id="orderForm" action="https://formspree.io/f/xqejajav" method="POST">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="nama">Nama</label>
+          <input type="text" id="nama" name="nama" placeholder="Nama kamu" required>
+        </div>
+        <div class="form-group">
+          <label for="wa">Nomor WhatsApp</label>
+          <input type="tel" id="wa" name="nomor_whatsapp" placeholder="08xxxxxxxxxx" required>
+        </div>
+        <div class="form-group full">
+          <label for="layanan">Jenis Layanan</label>
+          <select id="layanan" name="jenis_layanan" required>
+            <option value="">-- Pilih layanan --</option>
+            <option>Rakit PC Custom</option>
+            <option>Windows Optimization / Aktivasi</option>
+            <option>Linux Gaming Setup</option>
+            <option>PS3 Jailbreak / Install Game</option>
+            <option>PS4 Jailbreak / Install Game</option>
+            <option>Servis Laptop</option>
+            <option>Jual Beli Perangkat</option>
+            <option>Lainnya</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label for="deskripsi">Deskripsi Masalah / Kebutuhan</label>
+          <textarea id="deskripsi" name="deskripsi" placeholder="Ceritain detail masalah atau spek yang kamu mau. Makin detail makin baik!" required></textarea>
+        </div>
+        <div class="form-group full">
+          <label for="lokasi">Lokasi (Kelurahan / Kecamatan)</label>
+          <input type="text" id="lokasi" name="lokasi" placeholder="Contoh: Rajabasa, Kedaton, Way Halim...">
+        </div>
+      </div>
+      <p class="form-note">Tiket kamu akan masuk ke email kami. <strong>Kami yang akan menghubungi kamu via WA</strong> dalam 1×24 jam — nomor kami tidak dipublikasikan di sini untuk keamanan.</p>
+      <button type="submit" class="btn-submit" id="submitBtn">Kirim Tiket →</button>
+    </form>
+    <div class="form-success" id="successMsg">✓ Tiket berhasil dikirim! Kami akan segera menghubungi kamu via WhatsApp. Terima kasih sudah mempercayai wangamenkomputer!</div>
+    <div class="form-error" id="errorMsg">Gagal mengirim tiket. Coba lagi atau hubungi kami via email di footer.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">wangamenkomputer</div>
+  <div class="footer-tagline">Passion-driven. Unlock your machine.</div>
+  <div class="footer-links">
+    <a href="#layanan">Layanan</a>
+    <a href="#kenapa">Tentang Kami</a>
+    <a href="#testi">Review</a>
+    <a href="#order">Buat Tiket</a>
+    <a onclick="revealEmail()">Email Kami</a>
+  </div>
+  <p style="font-size:11px; color: var(--muted); margin-top: 1.5rem; font-family: var(--mono);">© 2025 wangamenkomputer — Bandar Lampung</p>
+</footer>
+
+<script>
+  // ============================================================
+  // EMAIL PROTECTION
+  // Cara encode email kamu:
+  //   1. Buka browser console (F12 → Console)
+  //   2. Ketik: btoa('emailkamu@gmail.com')
+  //   3. Copy hasilnya, paste ke var _e di bawah
+  // Email TIDAK akan terlihat di source HTML/JS sebagai plaintext
+  // ============================================================
+  var _e = 'd2FuZ2FtZW5rb21wdXRlckBnbWFpbC5jb20=';
+
+  function revealEmail() {
+    try {
+      var email = atob(_e);
+      window.location.href = 'mailto:' + email;
+    } catch(e) {
+      alert('Email belum dikonfigurasi.');
+    }
+  }
+
+  // Form submit handler — pakai fetch biar bisa custom feedback
+  var form = document.getElementById('orderForm');
+  var submitBtn = document.getElementById('submitBtn');
+  var successMsg = document.getElementById('successMsg');
+  var errorMsg = document.getElementById('errorMsg');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Mengirim...';
+    errorMsg.style.display = 'none';
+
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(function(res) {
+      if (res.ok) {
+        form.style.display = 'none';
+        successMsg.style.display = 'block';
+      } else {
+        throw new Error('failed');
+      }
+    })
+    .catch(function() {
+      errorMsg.style.display = 'block';
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Kirim Tiket →';
+    });
+  });
+</script>
+</body>
+</html>
